@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
           line.erase(std::remove_if(line.begin(), line.end(), isNotAlnum), line.end());
             //first line the alphabet up to closing bracket
           alphabet.insert(begin(line), end(line));//iterate throught alphabets
-          //line1.erase();
+
           getline(myfile, line);//second line states
           line.erase(std::remove_if(line.begin(), line.end(), isNotAlnum), line.end());
           states.insert(begin(line), end(line));
@@ -97,20 +97,20 @@ int main(int argc, char* argv[])
 
 
 
-      cout<< "alphabet:"<<endl;
-      for (auto it = alphabet.begin(); it !=
+        cout<< "alphabet:"<<endl;
+        for (auto it = alphabet.begin(); it !=
                             alphabet.end(); ++it)
-       cout << ' ' << *it;
+        cout << ' ' << *it;
 
-       cout<<"\nThe states are:"<<endl;
+        cout<<"\nThe states are:"<<endl;
 
-       for (auto it = states.begin(); it !=
+        for (auto it = states.begin(); it !=
                             states.end(); ++it)
-       cout << ' ' << *it;
+        cout << ' ' << *it;
 
-      cout<<"\nStartstate is:\n"<<startstate<<endl;
-      cout<<"Acceptstates are:\n";
-      for (auto it = acceptstates.begin(); it != acceptstates.end(); ++it)
+        cout<<"\nStartstate is:\n "<<startstate<<endl;
+        cout<<"Acceptstates are:\n";
+        for (auto it = acceptstates.begin(); it != acceptstates.end(); ++it)
         cout<<' '<< *it;
         cout<<"\n"<<endl;
 
@@ -122,25 +122,37 @@ int main(int argc, char* argv[])
         std:: cout <<"{"<< key_pair.first <<","<< key_pair.second << "}-> " << entry.second << "\n";
         }
 
-        cout<< "Please enter string to test\n"<<endl;
+        std::cout<<"Please enter string to test or q to quit\n"<<endl;
 
-        //assert(startstate.size() == 1);
+
+        while(true)
+        {
         char currentstate = startstate[0];
         char inputChar;
-        string test;
-        cin>>test;
-        char char_array [test.length()];
-        for(int i=0; i< sizeof(char_array); i++)
-        {
-        std::cout << currentstate <<"->"<< transitions.find(make_pair(currentstate, test[i]))->second << '\n';
-        currentstate=(transitions.find(make_pair(currentstate, test[i]))->second);
-      //  std::cout<<currentstate<<endl;
+        std::string test;
+        std::string q("q");
+        std::cin>>test;
+        size_t quit_p= test.find(q);
+
+        if (quit_p!=string::npos)
+          {
+            break;
+          }
+
+
+            char char_array [test.length()];
+            for(int i=0; i< sizeof(char_array); i++)
+            {
+              std::cout << currentstate <<"->"<< transitions.find(make_pair(currentstate, test[i]))->second << '\n';
+              currentstate=(transitions.find(make_pair(currentstate, test[i]))->second);
+
+            }
+            const bool is_in = acceptstates.find(currentstate) != acceptstates.end();
+            if(is_in)
+            {
+              cout<<"String accepted"<<endl;
+            }
+            else cout<< "string not accepted"<<endl;
         }
-        const bool is_in = acceptstates.find(currentstate) != acceptstates.end();
-        if(is_in)
-        {
-        cout<<"String accepted"<<endl;
-        }
-        else cout<< "string not accepted"<<endl;
-        return 0;
+            return 0;
 }
