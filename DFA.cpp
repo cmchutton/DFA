@@ -155,4 +155,4 @@ int main(int argc, char* argv[])
             else cout<< "string not accepted"<<endl;
         }
             return 0;
-}
+}//end
